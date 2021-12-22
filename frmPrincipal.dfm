@@ -23,7 +23,7 @@ object formPrincipal: TformPrincipal
     Top = 0
     Width = 903
     Height = 405
-    ActivePage = paginaSegunda
+    ActivePage = paginaMapeamento
     Align = alClient
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -256,28 +256,18 @@ object formPrincipal: TformPrincipal
           OnClick = btnAtribuir2Click
         end
       end
-      object gridProcessos: TRzStringGrid
-        Left = 3
+      object StringGrid1: TStringGrid
+        Left = 5
         Top = 95
-        Width = 888
-        Height = 272
-        BevelOuter = bvRaised
-        BiDiMode = bdLeftToRight
-        DefaultColWidth = 90
-        DefaultRowHeight = 30
-        DrawingStyle = gdsClassic
-        Enabled = False
-        FixedCols = 0
-        FixedRows = 0
-        GridLineWidth = 2
-        Options = [goVertLine, goHorzLine, goRangeSelect, goDrawFocusSelected, goRowSizing, goColSizing, goRowSelect, goFixedColClick, goFixedRowClick, goFixedHotTrack]
-        ParentBiDiMode = False
+        Width = 886
+        Height = 276
         TabOrder = 1
-        DisabledColor = clCream
-        FocusColor = clBtnFace
-        FrameColor = clFuchsia
-        FixedLineColor = clRed
-        LineColor = clRed
+        ColWidths = (
+          64
+          64
+          64
+          64
+          64)
       end
     end
     object paginaSegunda: TTabSheet
@@ -412,28 +402,12 @@ object formPrincipal: TformPrincipal
         Enabled = False
         TabOrder = 5
       end
-      object gridHops: TRzStringGrid
-        Left = 5
+      object StringGrid2: TStringGrid
+        Left = 3
         Top = 205
-        Width = 884
+        Width = 889
         Height = 166
-        BevelOuter = bvRaised
-        BiDiMode = bdLeftToRight
-        DefaultColWidth = 40
-        DefaultRowHeight = 30
-        DrawingStyle = gdsClassic
-        Enabled = False
-        FixedCols = 0
-        FixedRows = 0
-        GridLineWidth = 2
-        Options = [goVertLine, goHorzLine, goRangeSelect, goDrawFocusSelected, goRowSizing, goColSizing, goRowSelect, goFixedColClick, goFixedRowClick, goFixedHotTrack]
-        ParentBiDiMode = False
         TabOrder = 6
-        DisabledColor = clCream
-        FocusColor = clBtnFace
-        FrameColor = clFuchsia
-        FixedLineColor = clRed
-        LineColor = clRed
       end
     end
     object paginaLog: TTabSheet

@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls,uTNodoChaveamento, System.Generics.Collections,
-  uTMensagem, Vcl.Grids, RzGrids;
+  uTMensagem, Vcl.Grids;
 
 type
   TformPrincipal = class(TForm)
@@ -36,7 +36,6 @@ type
     edtNumeroTarefa: TEdit;
     lblNomeTarefa: TLabel;
     edtNomeTarefa: TEdit;
-    gridProcessos: TRzStringGrid;
     paginaLog: TTabSheet;
     btnNumeroTarefas: TButton;
     btnTarefa: TButton;
@@ -47,7 +46,8 @@ type
     lblNomeTarget: TLabel;
     edtNomeTarget: TEdit;
     btnAtribuir2: TButton;
-    gridHops: TRzStringGrid;
+    StringGrid2: TStringGrid;
+    StringGrid1: TStringGrid;
     procedure btnCriarAmbienteClick(Sender: TObject);
     procedure btnEnviarClick(Sender: TObject);
     procedure edtTargetChange(Sender: TObject);
@@ -75,7 +75,7 @@ type
       procedure validacaoDeConfiguracao;
       procedure validacaoDados();
       procedure limparDadosDosCampos();
-      procedure limparGrid(pGrid: TRzStringGrid);
+      procedure limparGrid(pGrid: TStringGrid);
       procedure verificarHops();
       procedure encontrarCampo(pNome: string; var pColuna, pLinha: Integer);
 
@@ -118,26 +118,26 @@ begin
     lFim := lValorX - lBorda;
     for lDirecao := lInicio to lFim -1 do
     begin
-      gridProcessos.Cells[lDirecao, lInicio] := ListaNodoChaveamento[lCont - 1].Tarefa;
+      StringGrid1.Cells[lDirecao, lInicio] := ListaNodoChaveamento[lCont - 1].Tarefa;
       Inc(lCont);
     end;
     Inc(lBorda);
     lFim := lValorY - lBorda;
     for lDirecao := lInicio + 1 to lFim do
     begin
-      gridProcessos.Cells[lFim, lDirecao] := ListaNodoChaveamento[lCont - 1].Tarefa;
+      StringGrid1.Cells[lFim, lDirecao] := ListaNodoChaveamento[lCont - 1].Tarefa;
       Inc(lCont);
     end;
     lFim := lValorX - lBorda;
     for lDirecao := lFim - 1  downto lInicio do
     begin
-      gridProcessos.Cells[lDirecao, lFim] := ListaNodoChaveamento[lCont -1].Tarefa;
+      StringGrid1.Cells[lDirecao, lFim] := ListaNodoChaveamento[lCont -1].Tarefa;
       Inc(lCont);
     end;
     lFim := lValorY - lBorda;
     for lDirecao := lFim - 1 downto lInicio + 1 do
     begin
-      gridProcessos.Cells[lInicio, lDirecao] :=  ListaNodoChaveamento[lCont - 1].Tarefa;
+      StringGrid1.Cells[lInicio, lDirecao] :=  ListaNodoChaveamento[lCont - 1].Tarefa;
       Inc(lCont);
     end;
     lInicio := lInicio + 1;
@@ -151,10 +151,10 @@ begin
   validacaoDeConfiguracao;
   lTamanhoX := StrToInt(edtTamanhoX.Text);
   lTamanhoY := StrToInt(edtTamanhoY.Text);
-  gridProcessos.ColCount := lTamanhoY;
-  gridProcessos.RowCount := lTamanhoX;
-  gridHops.ColCount := lTamanhoY;
-  gridHops.RowCount := lTamanhoX;
+  StringGrid1.ColCount := lTamanhoY;
+  StringGrid1.RowCount := lTamanhoX;
+  StringGrid2.ColCount := lTamanhoY;
+  StringGrid2.RowCount := lTamanhoX;
   paginaConfiguracao.TabVisible := false;
   ListaNodoChaveamento := TObjectList<TNodoChaveamento>.Create();
   for lCont := 0 to (lTamanhoY * lTamanhoX) do
@@ -179,7 +179,7 @@ begin
     Showmessage('Erro não identificado reinicie a aplicação!');
   end;
   limparDadosDosCampos();
-  limparGrid(gridHops);
+  limparGrid(StringGrid2);
   verificarHops();
 end;
 
@@ -225,7 +225,7 @@ begin
   begin
     for lDirecaolinha := 0 to lValorX -1 do
     begin
-      gridProcessos.Cells[lDirecaolinha, lDirecaoColuna] := ListaNodoChaveamento[lCont].Tarefa;
+      StringGrid1.Cells[lDirecaolinha, lDirecaoColuna] := ListaNodoChaveamento[lCont].Tarefa;
       Inc(lCont);
     end;
   end;
@@ -287,11 +287,11 @@ procedure TformPrincipal.encontrarCampo(pNome: string; var pColuna, pLinha: Inte
 var
   lLinha, lColuna: Integer;
 begin
-  for lLinha := 0 to gridProcessos.RowCount - 1 do
+  for lLinha := 0 to StringGrid1.RowCount - 1 do
   begin
-    for lColuna := 0 to gridProcessos.ColCount - 1 do
+    for lColuna := 0 to StringGrid1.ColCount - 1 do
     begin
-      if(pNome = gridProcessos.Cells[lColuna, lLinha]) then
+      if(pNome = StringGrid1.Cells[lColuna, lLinha]) then
       begin
         pLinha := lLinha;
         pColuna := lColuna;
@@ -327,7 +327,7 @@ begin
   mmPayload.Text := '';
 end;
 
-procedure TformPrincipal.limparGrid(pGrid: TRzStringGrid);
+procedure TformPrincipal.limparGrid(pGrid: TStringGrid);
 var
   I, J: integer;
 begin
@@ -401,7 +401,7 @@ begin
     for lCont := lSourceLinha to lTargetLinha do
     begin
       Inc(lContHops);
-      gridHops.Cells[lSourceLinha, lCont] := IntToStr(lContHops);
+      StringGrid2.Cells[lSourceLinha, lCont] := IntToStr(lContHops);
     end;
   end
   else
@@ -409,7 +409,7 @@ begin
     for lCont := lSourceLinha downto lTargetLinha  do
     begin
       Inc(lContHops);
-      gridHops.Cells[lSourceLinha, lCont] := IntToStr(lContHops);
+      StringGrid2.Cells[lSourceLinha, lCont] := IntToStr(lContHops);
     end;
   end;
   /// Coluna
@@ -418,7 +418,7 @@ begin
     for lCont := lSourceColuna + 1 to lTargetColuna do
     begin
       Inc(lContHops);
-      gridHops.Cells[lCont, lTargetColuna + 1] := IntToStr(lContHops);
+      StringGrid2.Cells[lCont, lTargetColuna + 1] := IntToStr(lContHops);
     end;
   end
   else
@@ -426,7 +426,7 @@ begin
     for lCont := lSourceColuna - 1 downto lTargetColuna do
     begin
       Inc(lContHops);
-      gridHops.Cells[lSourceLinha, lCont] := IntToStr(lContHops);
+      StringGrid2.Cells[lSourceLinha, lCont] := IntToStr(lContHops);
     end;
   end;
   edtResultadoHops.Text := 'A mensagem (de ' + edtNomeSource.Text + ' para ' + edtNomeTarget.Text + ') percorreu ' +
